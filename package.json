@@ -1,14 +1,13 @@
 {
   "name": "rjs-starter",
-  "version": "1.1.0",
+  "version": "1.1.3",
   "main": "index.js",
   "scripts": {
-    "postinstall": "npx rjs-starter",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./index.js"
   },
   "bin": {
-    "rjs-starter": "index.js"
+    "rjs-starter": "./index.js"
   },
   "type": "module",
   "author": "Tushar Gola",
@@ -16,7 +15,7 @@
   "description": "A CLI tool for setting up React JS folder structures",
   "keywords": [
     "react",
-    "reactjs",
+    "react Js",
     "folder-structure",
     "cli",
     "starter",

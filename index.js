@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import fs from 'fs';
 import path, { dirname } from 'path';
 import spawn from 'cross-spawn';
@@ -446,7 +447,8 @@ const askQuestions = async () => {
         }
         executeCommand(answers)
     } catch (e) {
-        console.log(e)
+        console.log(chalk.yellowBright("\nProcess terminated by user. Goodbye!"));
+        process.exit(0);
     }
 }
 const entryPoint = async () => {
@@ -460,5 +462,17 @@ const entryPoint = async () => {
     }
 
 };
+
+// Listen for SIGINT (Ctrl+C) signal and exit gracefully
+process.on('SIGINT', () => {
+    console.log(chalk.yellowBright("\nProcess terminated by user. Goodbye!"));
+    process.exit(0);
+});
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (reason, promise) => {
+    console.log(chalk.red(`Unhandled Rejection at: ${promise}, reason: ${reason}`));
+    // Application-specific logging, throwing an error, or other logic here
+});
 
 entryPoint();
