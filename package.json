@@ -31,5 +31,13 @@
     "gradient-string": "^2.0.2",
     "inquirer": "^10.1.8",
     "ora": "^8.0.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tushar-gola/rjs-starter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Tushar-gola/rjs-starter/issues"
+  },
+  "homepage": "https://github.com/Tushar-gola/rjs-starter.git"
 }
