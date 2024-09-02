@@ -1,0 +1,35 @@
+{
+  "name": "rjs-starter",
+  "version": "1.1.0",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "npx rjs-starter",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./index.js"
+  },
+  "bin": {
+    "rjs-starter": "index.js"
+  },
+  "type": "module",
+  "author": "Tushar Gola",
+  "license": "ISC",
+  "description": "A CLI tool for setting up React JS folder structures",
+  "keywords": [
+    "react",
+    "reactjs",
+    "folder-structure",
+    "cli",
+    "starter",
+    "boilerplate",
+    "project-setup"
+  ],
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "cross-spawn": "^7.0.3",
+    "figlet": "^1.7.0",
+    "fs-extra": "^11.2.0",
+    "gradient-string": "^2.0.2",
+    "inquirer": "^10.1.8",
+    "ora": "^8.0.1"
+  }
+}

@@ -1,0 +1,19 @@
+# Ignore source control directories
+.git/
+
+# Ignore build and test files
+build/
+dist/
+test/
+*.test.js
+*.spec.js
+
+# Ignore configuration and environment files
+.gitignore
+.eslintignore
+.eslintrc.js
+.prettierrc
+.env
+
+# Ignore documentation files (if not needed in package)
+README.md
