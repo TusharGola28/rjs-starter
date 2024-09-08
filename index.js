@@ -300,16 +300,17 @@ const createProjectStructure = async (answers) => {
         console.log(chalk.cyan(`cd ${answers.projectName}`));
         console.log(chalk.cyan('npm run dev'));
         console.log(gradient.atlas.multiline('Hey hacker your project is ready for development :)\n'));
+         // Exit the process
+         process.exit(0);
+         
     } catch (e) {
         console.log(chalk.red(e), "============");
+        process.exit(1); // Exit with an error code if something went wrong
     }
 };
 const executeCommand = async (answers) => {
     const destinationPath = path.join(process.cwd(), answers.projectName);
-
     const loader = startLoader('Setting up Vite project... \n').start();
-    console.log(destinationPath);
-
     if (!fs.existsSync(destinationPath)) {
         fs.mkdirSync(destinationPath);
     }
@@ -328,7 +329,7 @@ const executeCommand = async (answers) => {
         await new Promise((resolve, reject) => {
             const child = spawn('npm', commandArgs, {
                 stdio: 'inherit',
-                shell: true,
+                shell: false,
             });
 
             child.on('close', (code) => {

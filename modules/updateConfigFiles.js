@@ -25,7 +25,7 @@ const updateConfigFiles = async (answers) => {
             }
             if (!['assets'].includes(folder)) {
                 // Create an index file inside each folder
-                const indexFileName = answers.language === 'TypeScript' ? 'index.tsx' : 'index.jsx';
+                const indexFileName = answers.language == 'TypeScript' || answers.language == 'TypeScript + SWC' ? 'index.tsx' : 'index.jsx';                
                 const indexFilePath = path.join(folderPath, indexFileName);
                 const indexFileContent = `// ${folder} module entry point`;
 
