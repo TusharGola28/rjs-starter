@@ -263,6 +263,7 @@ const installingDependencies = async (command, directory) => {
             cwd: path.join(process.cwd(), directory)
         });
         child.on('close', (code) => {
+
             clearInterval(loaderColorIntervalInstance);
             if (code === 0) {
                 resolve();
@@ -303,9 +304,12 @@ const createProjectStructure = async (answers) => {
         console.log(chalk.red(e), "============");
     }
 };
-const executeCommand = (answers) => {
+const executeCommand = async (answers) => {
     const destinationPath = path.join(process.cwd(), answers.projectName);
+
     const loader = startLoader('Setting up Vite project... \n').start();
+    console.log(destinationPath);
+
     if (!fs.existsSync(destinationPath)) {
         fs.mkdirSync(destinationPath);
     }
@@ -318,28 +322,35 @@ const executeCommand = (answers) => {
     };
     const template = languageTemplateMap[answers.language];
     const swcFlag = answers.language.includes('SWC') ? '--swc' : '';
-    const child = spawn('npm', ['create', 'vite@latest', answers?.projectName, '--', '--template', template, swcFlag].filter(Boolean), {
-        stdio: 'inherit',
-        shell: true,
-    });
+    const commandArgs = ['create', 'vite@latest', answers.projectName, '--', '--template', template, swcFlag].filter(Boolean);
 
+    try {
+        await new Promise((resolve, reject) => {
+            const child = spawn('npm', commandArgs, {
+                stdio: 'inherit',
+                shell: true,
+            });
 
-    child.on('close', (code) => {
+            child.on('close', (code) => {
+                if (code === 0) {
+                    loader.succeed(chalk.green('React JS project setup complete!'));
+                    resolve();
+                } else {
+                    loader.fail(chalk.red(`Command failed with exit code ${code}`));
+                    reject(new Error(`Command failed with exit code ${code}`));
+                }
+            });
 
-        clearInterval(loaderColorIntervalInstance);
-        if (code === 0) {
+            child.on('error', (err) => {
+                loader.fail(chalk.red(`Failed to start command: ${err.message}`));
+                reject(err);
+            });
+        });
 
-            loader.succeed(chalk.green('React JS project setup complete!'));
-            createProjectStructure(answers);
-        } else {
-            loader.fail(chalk.red(`Command failed with exit code ${code}`));
-        }
-    });
-
-    child.on('error', (err) => {
-        loader.fail(chalk.red(`Failed to start command: ${err.message}`));
-    });
-    console.log("not working");
+        await createProjectStructure(answers);
+    } catch (error) {
+        console.error(chalk.red('Error during setup:', error));
+    }
 
 }
 
